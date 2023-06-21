@@ -23,7 +23,7 @@ const Input = ({ onSendMessage }) => {
           placeholder="Enter your message and press ENTER"
           autoFocus
         />
-        <button type="submit">Send</button>
+        <button type="submit">pošalji</button>
       </form>
     </div>
   );

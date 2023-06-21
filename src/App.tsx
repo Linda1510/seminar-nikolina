@@ -1,23 +1,45 @@
 
+
+import  { useState, useEffect } from "react";
 import Header from "./components/header";
 import Input from "./components/input";
 import Messages from "./message/messages";
 import "./styles/styles.scss";
-state = {
-  messages: [
+
+const App = () => {
+  const [messages, setMessages] = useState([
     {
       text: "This is a test message!",
       member: {
         color: "blue",
-        username: "bluemoon"
-      }
-    }
-  ],
-  member: {
+        username: "bluemoon",
+      },
+    },
+  ]);
+
+  const [member, setMember] = useState({
     username: randomName(),
-    color: randomColor()
-  }
-const App=()=> {
+    color: randomColor(),
+  });
+
+  useEffect(() => {
+    const drone = new window.Scaledrone("CQmg6PZYeclv4kdT", {
+      data: member,
+    });
+
+    drone.on("open", (error:string) => {
+      if (error) {
+        return console.error(error);
+      }
+      const updatedMember = { ...member, id: drone.clientId };
+      setMember(updatedMember);
+    });
+
+    return () => {
+      drone.close();
+    };
+  }, [member]);
+
   function randomName() {
     const adjectives = [
       "autumn",
@@ -156,44 +178,28 @@ const App=()=> {
     return adjective + noun;
   }
 
-  function randomColor=()=> {
+  function randomColor() {
     return "#" + Math.floor(Math.random() * 0xffffff).toString(16);
   }
-  onSendMessage = (message) => {
-  const messages = this.state.messages
-  messages.push({
-    text: message,
-    member: this.state.member
-  })
-  this.setState({messages: messages})
-}
-  return(
-<div className="app">
-  <Header/>
-  render=()=> {
+
+  const onSendMessage = (message:string) => {
+    const updatedMessages = [...messages];
+    updatedMessages.push({
+      text: message,
+      member: member,
+    });
+    setMessages(updatedMessages);
+  };
+
   return (
-    <div className="App">
-      <Messages
-        messages={this.state.messages}
-        currentMember={this.state.member}
-      />
-      <Input
-        onSendMessage={this.onSendMessage}
-      />
+    <div className="app">
+      <Header />
+      <div className="App">
+        <Messages messages={messages} currentMember={member} />
+        <Input onSendMessage={onSendMessage} />
+      </div>
     </div>
   );
 };
-  render=()=> {
-  return (
-    <div className="App">
-      <Messages
-        messages={this.state.messages}
-        currentMember={this.state.member}
-      />
-    </div>
-  );
-};
-</div>
-  );
-};
+
 export default App;

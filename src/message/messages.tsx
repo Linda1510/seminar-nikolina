@@ -1,8 +1,27 @@
 
+
 import React from "react";
 
-const Messages = ({ messages, currentMember }) => {
-  const renderMessage = (message:string) => {
+type Member = {
+  id: string;
+  clientData: {
+    color: string;
+    username: string;
+  };
+};
+
+type Message = {
+  member: Member;
+  text: string;
+};
+
+type MessagesProps = {
+  messages: Message[];
+  currentMember: Member;
+};
+
+const Messages: React.FC<MessagesProps> = ({ messages, currentMember }) => {
+  const renderMessage = (message: Message) => {
     const { member, text } = message;
     const messageFromMe = member.id === currentMember.id;
     const className = messageFromMe

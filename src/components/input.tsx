@@ -1,16 +1,27 @@
-import  { useState } from "react";
 
-const Input = ({ onSendMessage }) => {
-  const [text, setText] = useState("");
 
-  const onChange = (e) => {
+import  { useState, ChangeEvent, FormEvent } from "react";
+
+type InputProps = {
+  onSendMessage: (message: string) => void;
+  text:string,
+};
+
+const Input = ({ onSendMessage }:InputProps) => {
+
+  const [text, setText] = useState<InputProps[]>([]);
+
+  const onChange = (e: ChangeEvent) => {
     setText(e.target.value);
+    
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setText("");
-    onSendMessage(text);
+    if (text.trim() !== "") {
+      setText("");
+      onSendMessage(text);
+    }
   };
 
   return (
@@ -20,13 +31,18 @@ const Input = ({ onSendMessage }) => {
           onChange={onChange}
           value={text}
           type="text"
-          placeholder="Enter your message and press ENTER"
+          placeholder="Upiši poruku i stisni ENTER"
           autoFocus
         />
-        <button type="submit">pošalji</button>
+        <button type="submit">Pošalji</button>
       </form>
     </div>
   );
 };
 
 export default Input;
+
+
+
+
+

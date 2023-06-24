@@ -1,9 +1,12 @@
 
 
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import Header from "./components/header";
-import Messages from "./message/messages";
 import Input from "./components/input";
+import Messages from "./message/messages";
+import "./styles/styles.scss";
+
+
 
 type Member = {
   id?: string;
@@ -19,7 +22,7 @@ type Message = {
 const App = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
-      text: "This is a test message!",
+      text: "Testna poruka",
       member: {
         color: "blue",
         username: "bluemoon",
@@ -45,17 +48,57 @@ const App = () => {
       setMember(updatedMember);
     });
 
+    const room = drone.subscribe("observable-room");
+
+    room.on("data", (data: string, member: Member) => {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: data, member: member },
+      ]);
+    });
+
     return () => {
       drone.close();
+      room.unsubscribe();
     };
   }, [member]);
 
   function randomName(): string {
-  return randomName();
+    const adjectives = [
+      "autumn",
+      "hidden",
+      "bitter",
+      "misty",
+      "silent",
+      "empty",
+      "dry",
+      "dark",
+      "summer",
+      "icy",
+      "delicate",
+ 
+    ];
+    const nouns = [
+       "sunset",
+      "pine",
+      "shadow",
+      "leaf",
+      "dawn",
+      "glitter",
+      "forest",
+      "hill",
+      "cloud",
+      "meadow",
+      "sun",
+
+    ];
+    const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+    const noun = nouns[Math.floor(Math.random() * nouns.length)];
+    return adjective + noun;
   }
 
   function randomColor(): string {
-    return randomColor();
+    return "#" + Math.floor(Math.random() * 0xffffff).toString(16);
   }
 
   const onSendMessage = (message: string) => {
@@ -65,6 +108,10 @@ const App = () => {
       member: member,
     });
     setMessages(updatedMessages);
+    drone.publish({
+      room: "observable-room",
+      message: message,
+    });
   };
 
   return (

@@ -2,13 +2,12 @@
 
 import React from "react";
 
-type Member = {
+interface Member {
+  [x: string]: any;
+  username: string;
+  color: string;
   id: string;
-  clientData: {
-    color: string;
-    username: string;
-  };
-};
+}
 
 type Message = {
   member: Member;
@@ -31,10 +30,10 @@ const Messages: React.FC<MessagesProps> = ({ messages, currentMember }) => {
       <li className={className}>
         <span
           className="avatar"
-          style={{ backgroundColor: member.clientData.color }}
+          style={{ backgroundColor: member.color }}
         />
         <div className="Message-content">
-          <div className="username">{member.clientData.username}</div>
+          <div className="username">{member.username}</div>
           <div className="text">{text}</div>
         </div>
       </li>

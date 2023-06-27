@@ -4,6 +4,7 @@ import  { useState, useEffect } from "react";
 import Header from "./components/header";
 import Input from "./components/input";
 import Messages from "./message/messages";
+import {re} from "./message/messages";
 import "./styles/styles.scss";
 
 
@@ -20,14 +21,12 @@ type Message = {
 };
 
 const App = () => {
+  const drone = new window.Scaledrone("CQmg6PZYeclv4kdT")
+
+  // set init state for messages and users
+
   const [messages, setMessages] = useState<Message[]>([
-    {
-      text: "Testna poruka",
-      member: {
-        color: "blue",
-        username: "bluemoon",
-      },
-    },
+
   ]);
 
   const [member, setMember] = useState<Member>({
@@ -36,31 +35,29 @@ const App = () => {
   });
 
   useEffect(() => {
-    const drone = new window.Scaledrone("CQmg6PZYeclv4kdT", {
-      data: member,
-    });
 
-    drone.on("open", (error?: string) => {
+    const room = drone.subscribe("observable-room");
+
+    room.on("open", (error?: string) => {
       if (error) {
         return console.error(error);
       }
       const updatedMember = { ...member, id: drone.clientId };
-      setMember(updatedMember() );
+      console.log(member)
+      setMember(updatedMember);
     });
 
-    const room = drone.subscribe("observable-room");
-
+    
     room.on("data", (data: string, member: Member) => {
-      setMessages((prevMessages) => [
+      console.log("data", data)
+      console.log("member", member)
+      
+      setMessages((prevMessages, member) => [
         ...prevMessages,
         { text:data, member: member },
       ]);
     });
 
-    return () => {
-      drone.close();
-      room.unsubscribe();
-    };
   }, []);
 
   function randomName(): string {
@@ -107,7 +104,7 @@ const App = () => {
       text: message,
       member: member,
     });
-    setMessages(updatedMessages);
+    // setMessages(updatedMessages);
     drone.publish({
       room: "observable-room",
       message: message,

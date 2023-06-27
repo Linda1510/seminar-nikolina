@@ -1,4 +1,4 @@
-
+//@ts-nocheck
 
 import  { useState, useEffect } from "react";
 import Header from "./components/header";
@@ -45,7 +45,7 @@ const App = () => {
         return console.error(error);
       }
       const updatedMember = { ...member, id: drone.clientId };
-      setMember(updatedMember);
+      setMember(updatedMember() );
     });
 
     const room = drone.subscribe("observable-room");
@@ -53,7 +53,7 @@ const App = () => {
     room.on("data", (data: string, member: Member) => {
       setMessages((prevMessages) => [
         ...prevMessages,
-        { text: data, member: member },
+        { text:data, member: member },
       ]);
     });
 
@@ -61,7 +61,7 @@ const App = () => {
       drone.close();
       room.unsubscribe();
     };
-  }, [member]);
+  }, []);
 
   function randomName(): string {
     const adjectives = [

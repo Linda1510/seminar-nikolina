@@ -1,11 +1,11 @@
 
 
-import  { useState, ChangeEvent, FormEvent } from "react";
+import  { useState, ChangeEvent, FormEvent, InputHTMLAttributes } from "react";
 
 type InputProps = {
   onSendMessage: (message: string) => void;
-  text:string,
-};
+  text: string;
+} & InputHTMLAttributes<HTMLInputElement>;
 
 const Input = ({ onSendMessage }:InputProps) => {
 

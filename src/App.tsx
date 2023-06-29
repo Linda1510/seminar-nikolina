@@ -23,7 +23,7 @@ type Message = {
 const App = () => {
   const drone = new window.Scaledrone("CQmg6PZYeclv4kdT")
 
-  // set init state for messages and users
+  // set init state for messages and userss
 
   const [messages, setMessages] = useState<Message[]>([
 

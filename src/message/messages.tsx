@@ -20,11 +20,11 @@ type MessagesProps = {
 };
 
 const Messages: React.FC<MessagesProps> = ({ messages, currentMember }) => {
-  console.log("current", currentMember)
+  
 
   const renderMessage = (message: Message) => {
     const { member, text } = message;
-    console.log(message)
+   
     const messageFromMe = currentMember.id;
     const className = messageFromMe
       ? "Messages-message currentMember"
@@ -38,6 +38,7 @@ const Messages: React.FC<MessagesProps> = ({ messages, currentMember }) => {
         <div className="Message-content">
           <div className="username">{currentMember.username}</div>
           <div className="text">{text}</div>
+          
         </div>
       </li>
     );

@@ -109,7 +109,7 @@ const App = () => {
       room: "observable-room",
       message: message,
     });
-  };
+ };
 
   return (
     <div className="app">

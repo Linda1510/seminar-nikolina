@@ -216,7 +216,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <div className="App-header">
-       
+       <h1>Seminar-Nikolina</h1>
       </div>
       <Messages messages={messages} currentMember={member} />
       <Input onSendMessage={onSendMessage} />

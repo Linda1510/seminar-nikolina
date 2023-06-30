@@ -9,7 +9,7 @@ type InputProps = {
 
 const Input = ({ onSendMessage }:InputProps) => {
 
-  const [text, setText] = useState<InputProps[]>([]);
+  const [text, setText] = useState("");
 
   const onChange = (e: ChangeEvent) => {
     setText(e.target.value);

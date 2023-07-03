@@ -173,7 +173,7 @@ const App: React.FC = () => {
   useEffect(() => {
     let isTrue = true;
 
-    const droneSample = new window.Scaledrone("7vY3glZ07vcvBnIs", {
+    const droneSample = new window.Scaledrone("CQmg6PZYeclv4kdT", {
       data: member,
     });
 

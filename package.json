@@ -1,11 +1,12 @@
 {
-  "homepage": "https://github.com/Linda1510/seminar-nikolina.git",
+  "homepage": "https://github.io/Linda1510/seminar-nikolina",
   "name": "seminar-nikolina",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",

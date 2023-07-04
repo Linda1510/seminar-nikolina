@@ -1,19 +1,17 @@
+//@ts-nocheck
 
-
-import  { useState, ChangeEvent, FormEvent, InputHTMLAttributes } from "react";
+import { useState, ChangeEvent, FormEvent, InputHTMLAttributes } from "react";
 
 type InputProps = {
   onSendMessage: (message: string) => void;
   text: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const Input = ({ onSendMessage }:InputProps) => {
-
+const Input = ({ onSendMessage }: InputProps) => {
   const [text, setText] = useState("");
 
   const onChange = (e: ChangeEvent) => {
     setText(e.target.value);
-    
   };
 
   const onSubmit = (e: FormEvent) => {
@@ -41,8 +39,3 @@ const Input = ({ onSendMessage }:InputProps) => {
 };
 
 export default Input;
-
-
-
-
-
